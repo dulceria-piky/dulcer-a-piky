@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulcería Piky - Los Mejores Dulces</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+           -sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .floating-candy {
+            position: fixed;
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #e17055, #d63031);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2d3436;
+            font-weight: 700;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #e17055;
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #e17055;
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        main {
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #e17055;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-color: #ffeaa7;
+        }
+        
+        .products {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 3rem;
+            color: #2d3436;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '🍬';
+            position: absolute;
+            right: -50px;
+            animation: wiggle 1s infinite;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .product-card:hover .product-image::before {
+            left: 100%;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: #2d3436;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-info p {
+            color: #636e72;
+            margin-bottom: 1rem;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e17055;
+        }
+        
+        .contact {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4rem 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .contact-item {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .contact-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .contact-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background: #2d3436;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-weight: 600;
+        }
+        
+        .social-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        
+        .social-links a:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-candy" style="left: 10%; animation-delay: 0s;">🍭</div>
+    <div class="floating-candy" style="left: 30%; animation-delay: 3s;">🍬</div>
+    <div class="floating-candy" style="left: 50%; animation-delay: 6s;">🍫</div>
+    <div class="floating-candy" style="left: 70%; animation-delay: 9s;">🧁</div>
+    <div class="floating-candy" style="left: 90%; animation-delay: 12s;">🍪</div>
+
+    <header>
+        <nav>
+            <div class="logo">🍭 Dulcería Piky</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <h1>¡Bienvenidos a Dulcería Piky!</h1>
+            <p>Los dulces más deliciosos para endulzar tu día 🍬✨</p>
+            <a href="#productos" class="cta-button">Ver Productos</a>
+        </section>
+
+        <section id="productos" class="products">
+            <h2 class="section-title">Nuestros Dulces</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">🍭</div>
+                    <div class="product-info">
+                        <h3>Paletas Surtidas</h3>
+                        <p>Deliciosas paletas de sabores frutales</p>
+                        <div class="price">$15.00 c/u</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍫</div>
+                    <div class="product-info">
+                        <h3>Chocolates</h3>
+                        <p>Chocolates de la mejor calidad</p>
+                        <div class="price">$25.00 c/u</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍬</div>
+                    <div class="product-info">
+                        <h3>Dulces enchilados</h3>
+                        <p>Combinación perfecta de dulce y picante</p>
+                        <div class="price">$20.00 bolsa</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🧁</div>
+                    <div class="product-info">
+                        <h3>Cupcakes</h3>
+                        <p>Hechos con amor y mucho sabor</p>
+                        <div class="price">$30.00 c/u</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍪</div>
+                    <div class="product-info">
+                        <h3>Galletas Decoradas</h3>
+                        <p>Perfectas para cualquier ocasión</p>
+                        <div class="price">$18.00 c/u</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍡</div>
+                    <div class="product-info">
+                        <h3>Mesa de Dulces</h3>
+                        <p>Personalizada para tus eventos</p>
+                        <div class="price">Cotiza aquí</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="contact">
+            <div class="contact-container">
+                <h2 class="section-title">¡Contáctanos!</h2>
+                <p style="font-size: 1.2rem; color: #636e72; margin-bottom: 2rem;">
+                    Haz tu pedido o pregunta por nuestros servicios
+                </p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="icon">📱</div>
+                        <h3>Teléfono</h3>
+                        <p>+52 (tu número aquí)</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">📍</div>
+                        <h3>Ubicación</h3>
+                        <p>Tu ciudad, dirección</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">⏰</div>
+                        <h3>Horario</h3>
+                        <p>Lun-Sab: 9am - 8pm</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">📧</div>
+                        <h3>Email</h3>
+                        <p>dulceriapiky@email.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>🍭 Dulcería Piky - Endulzando momentos especiales desde 2024 🍭</p>
+        <div class="social-links">
+            <a href="#">📘</a>
+            <a href="#">📸</a>
+            <a href="#">💬</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+            Hecho con ❤️ para mamá
+        </p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.product-card, .contact-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+  </html>
+      
